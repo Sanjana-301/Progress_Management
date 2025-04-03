@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+    <script defer src="{{ url_for('static', filename='chat.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Task Dashboard</a></li>
+                <li><a href="/chat" class="active">Chat System</a></li>
+                <li><a href="/tasks">Manage Tasks</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Chat Content -->
+        <main class="content">
+            <header class="top-bar">
+                <h1>Chat System</h1>
+                <button onclick="scheduleMeeting()">📅 Schedule Meeting</button>
+            </header>
+
+            <section class="chat-container">
+                <div class="chat-sidebar">
+                    <h3>Users</h3>
+                    <ul id="user-list">
+                        <li>@Alice</li>
+                        <li>@Bob</li>
+                        <li>@Charlie</li>
+                    </ul>
+
+                    <h3>Groups</h3>
+                    <ul id="group-list">
+                        <li>#ProjectA</li>
+                        <li>#Development</li>
+                        <li>#General</li>
+                    </ul>
+                </div>
+
+                <div class="chat-box">
+                    <div id="chat-messages"></div>
+                    <p id="typing-status"></p>
+                    <div class="chat-input">
+                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off">
+                        <select id="priority">
+                            <option value="normal">Normal</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                        <button id="send-btn">Send</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function scheduleMeeting() {
+            alert("Meeting Scheduled! Participants will be notified.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Planning Dashboard</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="/">🏠 Home</a></li>
+                <li><a href="/dashboard">📋 Task Dashboard</a></li>
+                <li><a href="/chat">💬 Chat System</a></li>
+                <li><a href="/tasks">✅ Manage Tasks</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-bar">
+                <h1>Welcome Back!</h1>
+                <p>Stay updated with your workspace progress.</p>
+            </header>
+
+            <!-- Live Statistics -->
+            <section class="stats">
+                <div class="stat-box">
+                    <h3 id="total-tasks">Loading...</h3>
+                    <p>Total Tasks</p>
+                </div>
+                <div class="stat-box">
+                    <h3 id="pending-tasks">Loading...</h3>
+                    <p>Pending Tasks</p>
+                </div>
+                <div class="stat-box">
+                    <h3 id="active-users">Loading...</h3>
+                    <p>Active Users</p>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="recent-activity">
+                <h2>Recent Activity</h2>
+                <ul id="activity-feed">
+                    <li>Loading recent activities...</li>
+                </ul>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2>Quick Actions</h2>
+                <button onclick="createTask()">+ Add New Task</button>
+                <button onclick="startChat()">💬 Start a Chat</button>
+                <button onclick="generateReport()">📊 Generate Report</button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchStats();
+            fetchActivity();
+        });
+
+        function fetchStats() {
+            fetch("/api/stats")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("total-tasks").innerText = data.total_tasks;
+                    document.getElementById("pending-tasks").innerText = data.pending_tasks;
+                    document.getElementById("active-users").innerText = data.active_users;
+                })
+                .catch(() => console.error("Failed to load stats"));
+        }
+
+        function fetchActivity() {
+            fetch("/api/activity")
+                .then(response => response.json())
+                .then(data => {
+                    let activityFeed = document.getElementById("activity-feed");
+                    activityFeed.innerHTML = "";
+                    data.activities.forEach(activity => {
+                        let li = document.createElement("li");
+                        li.innerText = activity;
+                        activityFeed.appendChild(li);
+                    });
+                })
+                .catch(() => console.error("Failed to load activity"));
+        }
+
+        function createTask() {
+            window.location.href = "/tasks";
+        }
+
+        function startChat() {
+            window.location.href = "/chat";
+        }
+
+        function generateReport() {
+            alert("📊 Report generated successfully!");
+        }
+
+        // WebSocket for real-time updates
+        const socket = io();
+        socket.on("user_count", count => {
+            document.getElementById("active-users").innerText = count;
+        });
+    </script>
+</body>
+</html>

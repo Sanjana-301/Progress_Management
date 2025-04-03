@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='tasks.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Task Dashboard</a></li>
+                <li><a href="/chat">Chat System</a></li>
+                <li><a href="/tasks" class="active">Manage Tasks</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-bar">
+                <h1>Manage Tasks</h1>
+                <button onclick="openTaskModal()">+ Add New Task</button>
+            </header>
+
+            <!-- Task Table -->
+            <section class="task-list">
+                <h2>Task List</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-table">
+                        <!-- Static Data (Will be dynamic later) -->
+                        <tr>
+                            <td>Fix UI Bugs</td>
+                            <td class="high">High</td>
+                            <td class="pending">Pending</td>
+                            <td>
+                                <button onclick="editTask()">✏️ Edit</button>
+                                <button onclick="deleteTask()">🗑️ Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Deploy API</td>
+                            <td class="urgent">Urgent</td>
+                            <td class="in-progress">In Progress</td>
+                            <td>
+                                <button onclick="editTask()">✏️ Edit</button>
+                                <button onclick="deleteTask()">🗑️ Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Write Documentation</td>
+                            <td class="medium">Medium</td>
+                            <td class="completed">Completed</td>
+                            <td>
+                                <button onclick="editTask()">✏️ Edit</button>
+                                <button onclick="deleteTask()">🗑️ Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Task Modal (for Adding/Editing Tasks) -->
+            <div id="taskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeTaskModal()">&times;</span>
+                    <h2>Add/Edit Task</h2>
+                    <form id="taskForm">
+                        <label>Task Name:</label>
+                        <input type="text" id="taskName" required>
+
+                        <label>Priority:</label>
+                        <select id="taskPriority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+
+                        <label>Status:</label>
+                        <select id="taskStatus">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+
+                        <button type="submit">Save Task</button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function openTaskModal() {
+            document.getElementById("taskModal").style.display = "block";
+        }
+
+        function closeTaskModal() {
+            document.getElementById("taskModal").style.display = "none";
+        }
+
+        function editTask() {
+            alert("Edit feature coming soon!");
+        }
+
+        function deleteTask() {
+            alert("Delete feature coming soon!");
+        }
+    </script>
+</body>
+</html>

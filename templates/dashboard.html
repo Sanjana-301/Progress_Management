@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.min.js"></script>
+    <style>
+        .chart-container {
+            width: 40%; /* Reduce width */
+            height: 250px; /* Set fixed height */
+            margin: 20px auto;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 200px !important; /* Reduce chart height */
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                width: 80%; /* Adjust for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="/">🏠 Home</a></li>
+                <li><a href="/dashboard" class="active">📋 Task Dashboard</a></li>
+                <li><a href="/chat">💬 Chat System</a></li>
+                <li><a href="/tasks">✅ Manage Tasks</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-bar">
+                <h1>Task Dashboard</h1>
+                <p>Analyze your progress and workload distribution.</p>
+            </header>
+
+            <section class="stats">
+                <div class="stat-box">
+                    <h3>15</h3>
+                    <p>Total Tasks</p>
+                </div>
+                <div class="stat-box">
+                    <h3>7</h3>
+                    <p>Pending Tasks</p>
+                </div>
+                <div class="stat-box">
+                    <h3>5</h3>
+                    <p>In Progress</p>
+                </div>
+                <div class="stat-box">
+                    <h3>3</h3>
+                    <p>Completed</p>
+                </div>
+            </section>
+
+            <!-- Task Progress Chart -->
+            <section class="chart-container">
+                <h2>Task Progress Overview</h2>
+                <canvas id="taskProgressChart"></canvas>
+            </section>
+
+            <!-- Performance Improvement Chart -->
+            <section class="chart-container">
+                <h2>Performance Over Time</h2>
+                <canvas id="performanceChart"></canvas>
+            </section>
+
+            <!-- Completed Work Overview -->
+            <section class="chart-container">
+                <h2>Completed Work Overview</h2>
+                <canvas id="completedWorkChart"></canvas>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderTaskProgressChart();
+            renderPerformanceChart();
+            renderCompletedWorkChart();
+        });
+
+        function renderTaskProgressChart() {
+            new Chart(document.getElementById("taskProgressChart"), {
+                type: "bar",
+                data: {
+                    labels: ["Pending", "In Progress", "Completed"],
+                    datasets: [{
+                        label: "Tasks",
+                        data: [7, 5, 3],
+                        backgroundColor: ["red", "yellow", "green"]
+                    }]
+                }
+            });
+        }
+
+        function renderPerformanceChart() {
+            new Chart(document.getElementById("performanceChart"), {
+                type: "line",
+                data: {
+                    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+                    datasets: [{
+                        label: "Tasks Completed",
+                        data: [2, 4, 6, 8],
+                        borderColor: "blue",
+                        fill: false
+                    }]
+                }
+            });
+        }
+
+        function renderCompletedWorkChart() {
+            new Chart(document.getElementById("completedWorkChart"), {
+                type: "bar",
+                data: {
+                    labels: ["Feature Dev", "Bug Fix", "Testing"],
+                    datasets: [{
+                        label: "Tasks Completed",
+                        data: [5, 2, 3],
+                        backgroundColor: ["purple", "orange", "cyan"]
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>
